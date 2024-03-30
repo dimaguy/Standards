@@ -29,7 +29,7 @@ The following represents the file format in a more visual aspect
 {
   "label": "...",         // (RECOMMENDED) The name of the build, if specified end result of a block in the build SHALL be "BuildName: blocks[i].label", if not end result SHALL be blocks[i].label
   "tooltip": "...",       // (OPTIONAL) The description of the build, shared between all blocks unless overridden
-  "size": [1,1,1],        // (RECOMMENDED) Size in number of blocks required for the build, not needed for printing but is an indicator for an automated builder
+  "size": [1,1,1],        // (RECOMMENDED) Size (x,y,z) in number of blocks required for the build, not needed for printing but is an indicator for an automated builder
   "isButton": false,      // Global setting for all blocks, if not assigned every block must have it's own setting
   "collideWhenOn": true,  // Global setting for all blocks, if not assigned every block must have it's own setting
   "collideWhenOff": true, // Global setting for all blocks, if not assigned every block must have it's own setting
@@ -45,7 +45,7 @@ The following represents the file format in a more visual aspect
     {
       "label": "...",             // (OPTIONAL) The name of the block, if empty SHALL use "(blocks[i].x,blocks[i].y,blocks[i].z)" as blocks[i].label
       "tooltip": "...",           // (OPTIONAL) The description of the block, overrides the tooltip of the build
-      "coordinates": [[0, 0, 0]], // 0,0,0 represents the origin of the build, used for automated builders and desambiguation, each set of coordinates SHOULD be globally unique (if not, automated building programs SHALL fail), the block MUST be printed for the amount of coordinates in this array
+      "coordinates": [[0, 0, 0]], // Order: x,y,z. 0,0,0 represents the origin of the build, used for automated builders and desambiguation, each set of coordinates SHOULD be globally unique (if not, automated building programs SHALL fail), the block MUST be printed for the amount of coordinates in this array
       "lightLevel": 2,            // (OPTIONAL if assigned globally) The light level of the block, overrides the global setting
       "redstoneLevel": 14,        // (OPTIONAL if assigned globally) The redstone level of the block, overrides the global setting
       //Any global setting can be overridden here
