@@ -25,7 +25,7 @@ The file MUST be composed of a single JSON object with this basic ruleset:
 - The writer MUST define an array of block models, following the specifications of the [3dj](https://docs.sc3.io/features/sc-peripherals.html#_3dj-format) format with the addition of a coordinates array (if the user foregoes presets each block model object should be compatible with a 3dj file if the global settings are inserted, the coordinates field WILL be disregarded).
 - Each block model MAY override a global setting.
 The following represents the file format in a more visual aspect
-```
+```jsonc
 {
   "label": "...",         // (RECOMMENDED) The name of the build, if specified end result of a block in the build SHALL be "BuildName: blocks[i].label", if not end result SHALL be blocks[i].label
   "tooltip": "...",       // (OPTIONAL) The description of the build, shared between all blocks unless overridden
