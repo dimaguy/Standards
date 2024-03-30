@@ -29,9 +29,7 @@ The following represents the file format in a more visual aspect
 {
   "label": "...",         // (RECOMMENDED) The name of the build, if specified end result of a block in the build SHALL be "BuildName: blocks[i].label", if not end result SHALL be blocks[i].label
   "tooltip": "...",       // (OPTIONAL) The description of the build, shared between all blocks unless overridden
-  "width": 1,             // (RECOMMENDED) Width required for the build, not needed for printing but is an indicator for an automated builder
-  "length": 2,            // (RECOMMENDED) Length required for the build, not needed for printing but is an indicator for an automated builder
-  "height": 3,            // (RECOMMENDED) Height required for the build, not needed for printing but is an indicator for an automated builder
+  "size": [1,1,1],        // (RECOMMENDED) Size in number of blocks required for the build, not needed for printing but is an indicator for an automated builder
   "isButton": false,      // Global setting for all blocks, if not assigned every block must have it's own setting
   "collideWhenOn": true,  // Global setting for all blocks, if not assigned every block must have it's own setting
   "collideWhenOff": true, // Global setting for all blocks, if not assigned every block must have it's own setting
