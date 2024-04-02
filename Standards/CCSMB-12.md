@@ -20,7 +20,7 @@ This RFC introduces the 3D JSON Array Format, used for printing 3D Blocks in Com
 
 ## Technical details
 
-The file MUST be composed of a single JSON object([RFC 8259](https://datatracker.ietf.org/doc/html/rfc8259), "The JavaScript Object Notation (JSON) Data Interchange Format") with the following ruleset:
+The file MUST be composed of a single JSON object ([RFC 8259](https://datatracker.ietf.org/doc/html/rfc8259), "The JavaScript Object Notation (JSON) Data Interchange Format") with the following ruleset:
 - The writer SHOULD specify global non-default (according to 3dj) common settings for the printed 3D blocks in the global namespace of the JSON object.
 - The writer MAY define a dictionary of presets (which are tint/texture combinations), if this isn't done every block MUST use their own texture and tint for each shape.
 - The writer MUST define an array of block models, following the specifications of the [3dj](https://docs.sc3.io/features/sc-peripherals.html#_3dj-format) format with the addition of a coordinates array (if the user foregoes presets each block model object should be compatible with a 3dj file, the coordinates field SHOULD be disregarded by 3dj-only readers).
@@ -32,6 +32,9 @@ The file MUST be composed of a single JSON object([RFC 8259](https://datatracker
 - The reader SHOULD facilitate the printing of a single block of the entire set by providing facilities to print a coordinate, a label of a block or it's index in the file.
 - The reader SHOULD reject or warn about files whose coordinates don't match boundaries in set in size, if one is set.
 - The reader SHOULD reject blocks that try to refer to unknown presets.
+- A printer SHOULD produce the block in the amount of the sets of coordinates of the block.
+- A fallback "amount" parameter MAY be accepted per block for mass production purposes, such parameter SHOULD match the amount of coordinates if those are set, but if it doesn't a printer MAY use it to override the amount of sets of coordinates.
+- Writers SHOULD avoid using "amount" parameter if there's coordinates facilities available.
 The following represents the file format in a more visual aspect:
 ```jsonc
 {
@@ -57,12 +60,13 @@ The following represents the file format in a more visual aspect:
       "label": "...",                // (OPTIONAL) The name scheme of a block, if empty the "blocks[i].label" SHALL be "Untitled", the string MUST be processed to make use of the Label Variables below
       "overrideGlobalLabel": false,  // (OPTIONAL) If true, label of this block SHALL override the global label entirely
       "tooltip": "...",              // (OPTIONAL) The description of the block, overrides the tooltip of the build
-      "coordinates": [[0, 0, 0]],    // Coordinates of the block (if not, automated building programs SHALL fail), the block MUST be printed for the amount of coordinates in this array
+      "coordinates": [[0, 0, 0]],    // Coordinates of the block (if not, automated building programs SHALL fail and a printer SHOULD only print the block once)
+      "amount": 64,                  // SHOULD NOT be used if coordinates is set, but if it is, SHOULD match their amount of sets. Can be used for mass production.
       "lightLevel": 2,               // (OPTIONAL) The light level of the block, overrides the global setting
       "redstoneLevel": 14,           // (OPTIONAL) The redstone level of the block, overrides the global setting
       //Any global setting can be overridden here
       "shapesOff": [
-        { "bounds": [0, 0, 0, 16, 16, 16], "preset": "presetname"},           //A shape can use a preset, which MUST be in presets dictionary
+        { "bounds": [0, 0, 0, 16, 16, 16], "preset": "presetname"},           //A shape can use a preset, which MUST be defined in presets dictionary
         { "bounds": [0, 0, 0, 16, 16, 16], "texture": "", "tint": "FFFFFF" }, //Or define its own texture and tint
       ],
       "shapesOn": [
@@ -82,4 +86,5 @@ Readers SHOULD refuse to process a label containing itself as a variable, but MA
 - $BX - Block X Coordinate
 - $BY - Block Y Coordinate
 - $BZ - Block Z Coordinate
+- $BS - Block Serial Number (reset in every printing session)
 This list MAY be extended by implementations.
